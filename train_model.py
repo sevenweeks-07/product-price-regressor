@@ -20,7 +20,7 @@ Example:
   python train_model.py \
     --root "training" \
     --model_name "bert-base-uncased" \
-    --epochs 3 \
+    --epochs 30 \
     --batch_size 16 \
     --lr 2e-5
 
