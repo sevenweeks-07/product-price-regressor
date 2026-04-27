@@ -307,10 +307,3 @@ Unit: count
 
 **Predicted Price:** `$12.99`
 
----
-
-## Acknowledgments
-
-- Amazon ML Challenge 2025 for the competition and dataset
-- HuggingFace for the Transformers library
-- PyTorch team for the deep learning framework
