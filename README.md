@@ -1,31 +1,32 @@
-# 🏆 Product Price Regressor
+# Product Price Regressor
 
-> **Top 100 Solution** for Amazon ML Challenge 2025
+> **Top 100 Solution** — Amazon ML Challenge 2025  
 > BERT-based product price prediction from catalog text using transformer regression
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)
-![Transformers](https://img.shields.io/badge/🤗-Transformers-yellow.svg)
+![Transformers](https://img.shields.io/badge/HuggingFace-Transformers-yellow.svg)
 
 ---
 
-## 📖 Overview
+## Overview
 
-This repository contains a **Top 100 solution** for the **Amazon ML Challenge 2025**, achieving competitive performance on product price prediction using only catalog text descriptions. The solution leverages **transfer learning** with BERT-based transformers to predict product prices from raw product descriptions.
+This repository contains a Top 100 solution for the Amazon ML Challenge 2025, achieving competitive performance on product price prediction using only catalog text descriptions. The solution leverages transfer learning with BERT-based transformers to predict product prices from raw product descriptions.
 
-### 🎯 Key Achievements
+### Key Achievements
 
-- ✅ **Top 100 finish** in Amazon ML Challenge 2025
-- ✅ **BERT-based regression** with fine-tuned transformer models
-- ✅ **Product-aware data splitting** to prevent data leakage
-- ✅ **Multiple text cleaning strategies** for optimal preprocessing
-- ✅ **Production-ready inference pipeline** with batch processing
+- Top 100 finish in Amazon ML Challenge 2025
+- BERT-based regression with fine-tuned transformer models
+- Product-aware data splitting to prevent data leakage
+- Multiple text cleaning strategies for optimal preprocessing
+- Production-ready inference pipeline with batch processing
 
 ---
 
-## 🧠 Problem Statement
+## Problem Statement
 
 Given product catalog descriptions (text), predict the price of products. The challenge involves:
+
 - **Noisy text data** with marketing fluff, HTML tags, and inconsistent formatting
 - **Product variants** (same product, different sizes/quantities) with different prices
 - **Wide price range** requiring robust regression
@@ -33,9 +34,10 @@ Given product catalog descriptions (text), predict the price of products. The ch
 
 ---
 
-## 🚀 Solution Approach
+## Solution Approach
 
-### 1. **Data Preprocessing** (`prepare_training_data.py`)
+### 1. Data Preprocessing (`prepare_training_data.py`)
+
 - **Product-aware splitting**: Groups product variants together to prevent train/val leakage
 - **Text cleaning modes**:
   - `title_only` (recommended): Keeps product title + Value/Unit info
@@ -44,23 +46,26 @@ Given product catalog descriptions (text), predict the price of products. The ch
   - `minimal`: Light cleaning only
 - **Parallel processing** with multi-threading for fast I/O
 
-### 2. **Model Architecture** (`train_model.py`)
+### 2. Model Architecture (`train_model.py`)
+
 ```
 Input Text → BERT Tokenizer → BERT Encoder → Pooling → Dropout → Linear Head → Price
 ```
+
 - **Pretrained BERT** (`bert-base-uncased`) for text understanding
 - **Regression head** with dropout for regularization
 - **Mixed precision training** (FP16) for GPU efficiency
 - **Linear warmup scheduler** for stable training
 
-### 3. **Inference Pipeline** (`predict.py`)
+### 3. Inference Pipeline (`predict.py`)
+
 - Batch processing with configurable batch size
 - Automatic device detection (CPU/GPU)
 - Optional prediction clipping for realistic price ranges
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 product-price-regressor/
@@ -83,9 +88,10 @@ product-price-regressor/
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
+
 - Python 3.8+
 - CUDA-capable GPU (recommended)
 
@@ -113,7 +119,7 @@ tqdm>=4.65.0
 
 ---
 
-## 🎮 Usage
+## Usage
 
 ### Step 1: Prepare Training Data
 
@@ -195,43 +201,52 @@ id,predicted_price
 
 ---
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 The model is evaluated using:
+
 - **L1 Loss** (Mean Absolute Error)
 - **MAPE** (Mean Absolute Percentage Error)
-- **SMAPE** (Symmetric Mean Absolute Percentage Error) - primary metric
+- **SMAPE** (Symmetric Mean Absolute Percentage Error) — primary metric
 
 **Typical Results:**
-- Validation SMAPE: ~15-20% (depends on data quality)
-- Training time: ~30-60 min on GPU (3 epochs, 10K samples)
+- Validation SMAPE: ~15–20% (depends on data quality)
+- Training time: ~30–60 min on GPU (3 epochs, 10K samples)
 
 ---
 
-## 🔑 Key Features
+## Key Features
 
-### 1. **Product-Aware Splitting**
+### 1. Product-Aware Splitting
+
 Prevents data leakage by grouping product variants:
+
 ```python
 # Example: "Coca Cola 12oz" and "Coca Cola 24oz"
 # are kept in the same split (train OR val, not both)
 ```
 
-### 2. **Smart Text Cleaning**
+### 2. Smart Text Cleaning
+
 Removes noise while preserving important features:
-- ✂️ Strips HTML tags and marketing jargon
-- 📏 Preserves product titles and quantity information
-- 🔢 Normalizes unicode fractions (½ → 0.5)
-- 🧹 Removes SKU/ASIN codes and duplicate punctuation
 
-### 3. **Mixed Precision Training**
+- Strips HTML tags and marketing jargon
+- Preserves product titles and quantity information
+- Normalizes unicode fractions (½ → 0.5)
+- Removes SKU/ASIN codes and duplicate punctuation
+
+### 3. Mixed Precision Training
+
 Faster training with automatic FP16/FP32 conversion:
-- 🚀 ~2x speedup on modern GPUs
-- 💾 Reduced memory footprint
-- ✨ Automatic loss scaling
 
-### 4. **Flexible Model Selection**
+- Approximately 2x speedup on modern GPUs
+- Reduced memory footprint
+- Automatic loss scaling
+
+### 4. Flexible Model Selection
+
 Works with any HuggingFace transformer:
+
 ```bash
 # Try different models
 --model_name bert-base-uncased
@@ -241,38 +256,40 @@ Works with any HuggingFace transformer:
 
 ---
 
-## 🧪 Experimental Results
+## Experimental Results
 
-| Cleaning Mode | Val SMAPE | Notes |
-|---------------|-----------|-------|
-| `title_only` | **15.3%** | ⭐ Best performance, simplest |
-| `best` | 16.1% | More aggressive, slightly worse |
-| `smart` | 17.5% | Keeps size info, moderate |
-| `minimal` | 18.9% | Too much noise retained |
+| Cleaning Mode | Val SMAPE | Notes                         |
+|---------------|-----------|-------------------------------|
+| `title_only`  | **15.3%** | Best performance, simplest    |
+| `best`        | 16.1%     | More aggressive, slightly worse |
+| `smart`       | 17.5%     | Keeps size info, moderate     |
+| `minimal`     | 18.9%     | Too much noise retained       |
 
-| Model | Val SMAPE | Training Time |
-|-------|-----------|---------------|
-| `bert-base-uncased` | **15.3%** | 45 min |
-| `roberta-base` | 15.8% | 50 min |
-| `distilbert-base-uncased` | 16.9% | 30 min |
+| Model                       | Val SMAPE | Training Time |
+|-----------------------------|-----------|---------------|
+| `bert-base-uncased`         | **15.3%** | 45 min        |
+| `roberta-base`              | 15.8%     | 50 min        |
+| `distilbert-base-uncased`   | 16.9%     | 30 min        |
 
 *Results on internal validation set (5K samples, 3 epochs)*
 
 ---
 
-## 🧩 Technical Details
+## Technical Details
 
 ### Data Cleaning Pipeline
-1. **Multiline CSV reading** with proper quote handling
-2. **Product hashing** to group variants (MD5 of normalized title)
-3. **Text normalization**:
+
+1. Multiline CSV reading with proper quote handling
+2. Product hashing to group variants (MD5 of normalized title)
+3. Text normalization:
    - Unicode fraction conversion
    - HTML entity decoding
    - Whitespace normalization
    - Duplicate punctuation removal
-4. **Parallel processing** with ThreadPoolExecutor
+4. Parallel processing with `ThreadPoolExecutor`
 
 ### Model Training
+
 - **Optimizer**: AdamW with weight decay (0.01)
 - **Scheduler**: Linear warmup (10%) + linear decay
 - **Loss function**: L1 Loss (Mean Absolute Error)
@@ -280,6 +297,7 @@ Works with any HuggingFace transformer:
 - **Early stopping**: Based on validation SMAPE
 
 ### Inference Optimizations
+
 - Batch processing for throughput
 - Non-blocking GPU transfers
 - Automatic mixed precision (AMP)
@@ -287,9 +305,9 @@ Works with any HuggingFace transformer:
 
 ---
 
-## 📝 Example
+## Example
 
-**Input (catalog_content):**
+**Input (`catalog_content`):**
 ```
 Item Name: Organic Green Tea - Premium Quality
 Bullet Point 1: 100% organic green tea leaves
@@ -310,11 +328,8 @@ Unit: count
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- **Amazon ML Challenge 2025** for the competition and dataset
-- **HuggingFace** for the Transformers library
-- **PyTorch** team for the deep learning framework
-
----
-
+- Amazon ML Challenge 2025 for the competition and dataset
+- HuggingFace for the Transformers library
+- PyTorch team for the deep learning framework
