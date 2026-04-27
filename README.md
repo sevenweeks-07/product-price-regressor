@@ -256,25 +256,6 @@ Works with any HuggingFace transformer:
 
 ---
 
-## Experimental Results
-
-| Cleaning Mode | Val SMAPE | Notes                         |
-|---------------|-----------|-------------------------------|
-| `title_only`  | **15.3%** | Best performance, simplest    |
-| `best`        | 16.1%     | More aggressive, slightly worse |
-| `smart`       | 17.5%     | Keeps size info, moderate     |
-| `minimal`     | 18.9%     | Too much noise retained       |
-
-| Model                       | Val SMAPE | Training Time |
-|-----------------------------|-----------|---------------|
-| `bert-base-uncased`         | **15.3%** | 45 min        |
-| `roberta-base`              | 15.8%     | 50 min        |
-| `distilbert-base-uncased`   | 16.9%     | 30 min        |
-
-*Results on internal validation set (5K samples, 3 epochs)*
-
----
-
 ## Technical Details
 
 ### Data Cleaning Pipeline
